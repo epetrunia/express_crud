@@ -1,5 +1,9 @@
 const express = require('express');
 const {
+  validateCreatedUser,
+  validateUpdatedUser,
+} = require('../middleware/userValidation');
+const {
   createUser,
   updateUser,
   getUserById,
@@ -9,11 +13,11 @@ const {
 
 const userRouter = express.Router();
 
-userRouter.post('/user', createUser);
+userRouter.post('/user', validateCreatedUser, createUser);
 userRouter.get('/users', getAllUsers);
 userRouter
   .route('/users/:userId')
-  .put(updateUser)
+  .put(validateUpdatedUser, updateUser)
   .get(getUserById)
   .delete(removeUserById);
 
